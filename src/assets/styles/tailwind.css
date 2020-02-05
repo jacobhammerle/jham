@@ -3,10 +3,14 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: noto-regular;
-    src: url(./font/Noto_Sans/NotoSans-Regular.ttf);
+    font-family: lato-regular;
+    src: url(./font/Lato/Lato-Regular.ttf);
 }
 @font-face {
-    font-family: noto-bold;
-    src: url(./font/Noto_Sans/NotoSans-Bold.ttf);
+    font-family: lato-light;
+    src: url(./font/Lato/Lato-Light.ttf);
+}
+@font-face {
+    font-family: lato-bold;
+    src: url(./font/Lato/Lato-Bold.ttf);
 }

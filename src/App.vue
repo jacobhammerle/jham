@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="bg-gray-200 w-full h-screen">
-    <div id="nav" class="absolute">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="nav" class="absolute w-full text-center p-5">
+      <router-link class="text-lg p-5" to="/">Home</router-link> |
+      <router-link class="text-lg p-5" to="/about">About</router-link>
     </div>
     <router-view/>
   </div>
@@ -10,6 +10,15 @@
 
 <style>
 #app{
-  font-family: 'noto-regular', sans-serif;
+  font-family: 'lato-regular', sans-serif;
+}
+.lato-bold{
+  font-family: 'lato-bold', sans-serif;
+}
+.lato-regular{
+  font-family: 'lato-regular', sans-serif;
+}
+.lato-light{
+  font-family: 'lato-light', sans-serif;
 }
 </style>
