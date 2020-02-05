@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-gray-200 w-full h-screen">
+  <div id="app" class="bg-gray-200 w-full h-full">
     <div id="nav" class="absolute w-full text-center p-5">
       <router-link class="text-lg p-5" to="/">Home</router-link> |
       <router-link class="text-lg p-5" to="/about">About</router-link>
@@ -11,6 +11,9 @@
 <style>
 #app{
   font-family: 'lato-regular', sans-serif;
+}
+.router-link-exact-active{
+  text-decoration: underline;
 }
 .lato-bold{
   font-family: 'lato-bold', sans-serif;
