@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto h-screen flex justify-center items-center">
+  <div class="mx-auto h-screen flex justify-center items-center max-w-lg">
     <div class="text-center">
       <img class="m-auto rounded-full shadow-lg h-40" src="../assets/img/headshot.png">
       <img class="m-auto h-32" src="../assets/img/stick-body.png">
