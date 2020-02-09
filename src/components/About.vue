@@ -11,7 +11,7 @@
 
                 <p class="lato-light text-xl mb-6 leading-relaxed">Now I am currently working on my latest side project...my take on note taking</p>
 
-                <p class="lato-light text-xl mb-6 leading-relaxed">To get in touch, please send an email to <a class="lato-regular hover:underline" href="mailto:jacob@jham.me">jacob@jham.me</a>.</p>
+                <p class="lato-light text-xl mb-6 leading-relaxed">To get in touch, please send an email to <a class="lato-regular hover:underline" href="mailto:jacob@hammerle.us">jacob@hammerle.us</a>.</p>
             </div>
         </div>
     </div>
