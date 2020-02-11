@@ -2,6 +2,7 @@
   <div id="app" class="bg-gray-200 w-full h-full">
     <div id="nav" class="absolute w-full text-center p-5">
       <router-link class="text-lg p-5" to="/">Home</router-link> |
+      <router-link class="text-lg p-5" to="/blog">Blog</router-link> |
       <router-link class="text-lg p-5" to="/about">About</router-link>
     </div>
     <router-view/>
