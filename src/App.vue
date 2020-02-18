@@ -5,7 +5,7 @@
         <router-link class="lg:text-lg md:text-md sm:text-sm p-5" to="/blog">Blog</router-link> |
         <router-link class="lg:text-lg md:text-md sm:text-sm p-5" to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view class="px-8" />
   </div>
 </template>
 
