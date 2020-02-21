@@ -7,7 +7,7 @@
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2">Placeholder Title</div>
                         <p class="text-gray-700 text-base">
-                            {{ info.data.bpi.USD.description }}
+                            {{ user }}
                         </p>
                     </div>
                     <div class="px-6 py-4">
@@ -23,17 +23,41 @@
 
 <script>
 import axios from 'axios'
+import creds from '../../credentials.json'
 export default {
     name: 'blog',
     data() {
         return {
-            info: null
+            user: null,
+            repos: null
+        }
+    },
+    methods: {
+        getUserRepos(user) {
+            axios.request({
+            method: "get",
+            url: "users/" + user + "/repos",
+            baseURL: "https://api.github.com/"
+            }).then(function (response) {
+                console.log(response)
+                this.repos = response
+            }.bind(this))
         }
     },
     mounted() {
-        axios
-        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then(response => (this.info = response))
+        var self = this;
+        axios.request({
+            method: "get",
+            url: "user",
+            baseURL: "https://api.github.com/",
+            auth: {
+                username: creds.github_username,
+                password: creds.github_access_token
+            }
+            }).then(function (response) {
+                this.user = response.data
+                this.getUserRepos(response.data.login)
+            }.bind(this))
     }
 }
 </script>
