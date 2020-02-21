@@ -1,5 +1,5 @@
 <template>
-    <div class="about mx-auto flex justify-center items-center">
+    <div class="about container px-8 mx-auto flex justify-center items-center">
         <div class="pt-32 pb-32">
             <div class="max-w-xl">
                 <h1 class="text-3xl mb-12">About Me.</h1>
