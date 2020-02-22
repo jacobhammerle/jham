@@ -3,17 +3,18 @@
         <div class="pt-32 pb-32">
             <div class="max-w-xl">
                 <h1 class="text-3xl mb-12">Blog</h1>
-                <div class="max-w-sm bg-white rounded overflow-hidden shadow-lg">
+                <div class="max-w-md bg-white rounded overflow-hidden shadow-lg">
                     <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">Placeholder Title</div>
-                        <p class="text-gray-700 text-base">
-                            {{ user }}
-                        </p>
-                    </div>
-                    <div class="px-6 py-4">
-                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#sample</span>
-                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#test</span>
-                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#beta</span>
+                        <div class="font-bold text-xl mb-2">My Recent GitHub Activity...</div>
+                        <div v-for="commit in commits" v-bind:key="commit.id">
+                            <div class="pt-4">
+                                <p class="text-gray-700 text-md">{{ commit.commit.message }}</p>
+                                <div class="flex">
+                                    <p class="flex-1 text-gray-500 text-sm">{{ formatDate(commit.commit.author.date) }}</p>
+                                    <a class="flex-end hover:text-green-700" target="_blank" v-bind:href="commit.html_url"><i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -23,25 +24,29 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 import creds from '../../credentials.json'
 export default {
     name: 'blog',
     data() {
         return {
             user: null,
-            repos: null
+            commits: null
         }
     },
     methods: {
         getUserRepos(user) {
             axios.request({
             method: "get",
-            url: "users/" + user + "/repos",
+            url: "repos/" + user + "/jham/commits",
             baseURL: "https://api.github.com/"
             }).then(function (response) {
+                this.commits = response.data.slice(0, 5)
                 console.log(response)
-                this.repos = response
             }.bind(this))
+        },
+        formatDate(date){
+            return moment(date).format('ll')
         }
     },
     mounted() {
