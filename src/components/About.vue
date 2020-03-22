@@ -9,7 +9,7 @@
                 
                 <p class="lato-light text-xl mb-6 leading-relaxed">I am passionate about software development and building clean, efficient, and readable code. The world of programming has and always will entice me because of the never ending opportunies to learn. This site was created to host both my current and future software creations.</p>
 
-                <p class="lato-light text-xl mb-6 leading-relaxed">I am still currently working on building this personal website...</p>
+                <p class="lato-light text-xl mb-6 leading-relaxed">I am currently working on building a productivity web app focused around note taking...<a class="lato-regular hover:underline" href="https://note-taking-app-d4f53.firebaseapp.com/" target="_blank">check it out!</a></p>
 
                 <p class="lato-light text-xl mb-6 leading-relaxed">To get in touch, please send an email to <a class="lato-regular hover:underline" href="mailto:jacob@hammerle.us">jacob@hammerle.us</a>.</p>
             </div>
