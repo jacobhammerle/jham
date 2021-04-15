@@ -9,7 +9,11 @@
                 
                 <p class="lato-light text-xl mb-6 leading-relaxed">I am passionate about software development and building clean, efficient, and readable code. The world of programming has and always will entice me because of the never ending opportunies to learn. This site was created to host both my current and future software creations.</p>
 
-                <p class="lato-light text-xl mb-6 leading-relaxed">I am currently working on building a personal budgeting/finance app in react native...<a class="lato-regular hover:underline" href="https://github.com/jacobhammerle/slushie" target="_blank">check it out!</a></p>
+                <p class="lato-light text-xl mb-6 leading-relaxed">On the side I am currently developing a personal budgeting/finance app called Mars.</p>
+                
+                <div class="mx-auto my-4 max-w-xs">
+                    <img src="../assets/img/marsAppIcon.png" />
+                </div>
 
                 <p class="lato-light text-xl mb-6 leading-relaxed">To get in touch, please send an email to <a class="lato-regular hover:underline" href="mailto:jacob@hammerle.us">jacob@hammerle.us</a>.</p>
             </div>
