@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-gray-200 flex w-full">
+  <div id="app" class="bg-light-blue-50 flex w-full">
     <div id="nav" class="absolute inset-x-0 mx-auto flex-1 text-center p-5">
         <router-link class="lg:text-lg md:text-md sm:text-sm p-5" to="/">Home</router-link> |
         <router-link class="lg:text-lg md:text-md sm:text-sm p-5" to="/projects">Projects</router-link> |

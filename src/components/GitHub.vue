@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-md">
+    <div class="max-w-2xl">
         <div class="bg-gray-700 rounded-t text-white overflow-hidden shadow-lg px-6 py-4 font-bold text-xl">
             <span v-if="projectTitle">
                 {{ projectTitle }}
@@ -13,7 +13,7 @@
         <div class="bg-white rounded-b overflow-hidden shadow-lg mb-4">
             <div class="px-6 py-4">
                 <div class="flex">
-                    <div class="flex-1 font-bold text-lg mb-2">Most Recent GitHub Activity...</div>
+                    <div class="flex-1 font-bold text-lg mb-2">Most Recent Activity...</div>
                     <span class="flex-end"><i class="fab fa-github text-lg mt-1"></i></span>
                 </div>
                 <div v-for="commit in commits" v-bind:key="commit.id">

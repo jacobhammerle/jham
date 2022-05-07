@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-md bg-white rounded overflow-hidden shadow-lg">
+    <div class="max-w-2xl bg-white rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">
             <div class="flex">
                 <div class="flex-1 font-bold text-xl mb-2">Recent Tweets...</div>
@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import creds from '../../credentials.json'
 export default {
     name: "Twitter",
     data() {
