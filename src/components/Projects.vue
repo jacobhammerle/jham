@@ -3,11 +3,14 @@
         <div class="pt-32 pb-32">
             <div class="max-w-xl">
                 <h1 class="text-3xl mb-12">🧑🏼‍💻 Projects</h1>
-                <GitHub project-title="Pokemon App" repo="pokemon-app"/>
-                <GitHub project-title="Slushie" repo="slushie"/>
-                <GitHub project-title="Note Taking App" repo="note-taking-app"/>
+                <!--
+                <GitHub project-title="Minute Backend" repo="minute-api"/>
+                <GitHub project-title="Minute Frontend" repo="minute-app"/>
+                -->
                 <GitHub project-title="My Personal Website" repo="jham"/>
+                <!--
                 <Twitter />
+                -->
             </div>
         </div>
     </div>
@@ -15,12 +18,10 @@
 
 <script>
 import GitHub from '@/components/GitHub'
-import Twitter from '@/components/Twitter'
 export default {
     name: 'projects',
     components: {
-        GitHub,
-        Twitter
+        GitHub
     },
     data() {
         return {
