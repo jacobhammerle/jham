@@ -4,6 +4,7 @@ import Home from '@/components/Home.vue'
 import About from '@/components/About.vue'
 import Projects from '@/components/Projects.vue'
 import BlueScreenOfDeath from '@/components/BlueScreenOfDeath.vue'
+import PrivacyPolicy from '@/components/minute/PrivacyPolicy.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,14 @@ const routes = [
     path: '/projects',
     name: 'projects',
     component: Projects
+  },
+  {
+    path: '/minutePrivacyPolicy',
+    name: 'privacyPolicy',
+    component: PrivacyPolicy,
+    meta: {
+      hideNavbar: true
+    }
   },
   {
     path: '/blueTeam',
