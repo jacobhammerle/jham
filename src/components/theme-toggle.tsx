@@ -1,8 +1,8 @@
+import { HoverTooltip } from "@/components/hover-tooltip";
+import { themeColors, type ThemeName } from "@/theme/tokens";
 import { SymbolView } from "expo-symbols";
 import { useState } from "react";
 import { Platform, Pressable, Text, View } from "react-native";
-
-import { themeColors, type ThemeName } from "@/theme/tokens";
 
 const isWeb = Platform.OS === "web";
 
@@ -18,6 +18,14 @@ export function ThemeToggle({ themeName, onThemeChange }: ThemeToggleProps) {
       accessibilityRole="radiogroup"
       className="absolute right-6 top-6 z-10 flex-row rounded-full border border-border/70 bg-surface-muted/80 p-0.5 shadow-xl shadow-shadow/5"
     >
+      <View
+        accessibilityElementsHidden
+        className={`absolute left-0.5 top-0.5 h-9 w-9 rounded-full bg-surface shadow-sm transition-transform duration-300 ease-out ${
+          themeName === "dark" ? "translate-x-9" : "translate-x-0"
+        }`}
+        importantForAccessibility="no-hide-descendants"
+        pointerEvents="none"
+      />
       <ThemeToggleButton
         accessibilityLabel="Use light theme"
         isActive={themeName === "light"}
@@ -77,7 +85,7 @@ function ThemeToggleButton({
   const [dismissed, setDismissed] = useState(false);
   const [focused, setFocused] = useState(false);
   const webClassName = isWeb
-    ? "transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 hover:bg-surface/70"
+    ? "transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 hover:bg-surface/40"
     : "";
 
   return (
@@ -87,9 +95,7 @@ function ThemeToggleButton({
       accessibilityRole="radio"
       accessibilityState={{ checked: isActive }}
       {...(isWeb ? { "aria-checked": isActive } : {})}
-      className={`h-9 w-9 items-center justify-center rounded-full ${webClassName} ${
-        isActive ? "bg-surface shadow-sm" : ""
-      }`}
+      className={`z-10 h-9 w-9 items-center justify-center rounded-full ${webClassName}`}
       hitSlop={10}
       onBlur={isWeb ? () => setFocused(false) : undefined}
       onFocus={
@@ -115,16 +121,11 @@ function ThemeToggleButton({
         <>
           {children}
           {Platform.OS === "web" && (focused || hovered) && !dismissed && (
-            <View
-              accessibilityElementsHidden
-              className="absolute top-12 rounded-full border border-border/70 bg-surface px-2 py-1 shadow-md shadow-shadow/10"
-              importantForAccessibility="no-hide-descendants"
-              pointerEvents="none"
-            >
+            <HoverTooltip>
               <Text className="text-xs font-medium text-primary">
                 {tooltipLabel}
               </Text>
-            </View>
+            </HoverTooltip>
           )}
         </>
       )}

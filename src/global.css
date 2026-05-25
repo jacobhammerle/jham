@@ -20,6 +20,44 @@
   color: rgb(24 24 27);
 }
 
+@keyframes external-link-arrow-flight {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  42% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  43% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.external-link-arrow-flight {
+  animation: external-link-arrow-flight 360ms ease-out 1;
+}
+
+@keyframes external-link-arrow-enter {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.external-link-arrow-enter {
+  animation: external-link-arrow-enter 220ms ease-out 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -25,6 +25,7 @@ export function SiteHead() {
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       <link rel="manifest" href="/site.webmanifest" />
       <link rel="me" href={siteLinks.github} />
+      <link rel="me" href={siteLinks.linkedin} />
       <link rel="me" href={siteLinks.x} />
       <meta name="apple-mobile-web-app-title" content="Jacob" />
       <meta name="apple-mobile-web-app-capable" content="yes" />

@@ -1,3 +1,4 @@
+import { ExternalLinkArrow } from "@/components/external-link-arrow";
 import { tapHaptic } from "@/lib/haptics";
 import { openURL } from "@/lib/open-url";
 import { siteLinks } from "@/site";
@@ -59,13 +60,12 @@ function MinuteLink() {
           >
             Try Minute!
           </Text>
-          <Text
-            className={`text-xs font-semibold text-orange-700 dark:text-orange-300 ${
-              isWeb ? "transition duration-200 ease-out" : ""
-            } ${hovered || pressed ? "opacity-100" : "opacity-70"}`}
-          >
-            ↗
-          </Text>
+          <ExternalLinkArrow
+            className="text-orange-700 dark:text-orange-300"
+            hovered={hovered}
+            motion="flight"
+            pressed={pressed}
+          />
         </View>
       )}
     </Pressable>

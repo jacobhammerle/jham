@@ -1,3 +1,4 @@
+import { HoverTooltip } from "@/components/hover-tooltip";
 import { longPressHaptic, tapHaptic } from "@/lib/haptics";
 import { openURL } from "@/lib/open-url";
 import { siteLinks } from "@/site";
@@ -34,6 +35,14 @@ const links: SocialLink[] = [
     brand: true,
     shapeClassName: "rounded-xl",
     tooltipLabel: "Latest Activity",
+  },
+  {
+    label: "LinkedIn profile",
+    href: siteLinks.linkedin,
+    icon: "linkedin-in",
+    brand: true,
+    shapeClassName: "rounded-[10px]",
+    tooltipLabel: "Connect",
   },
   {
     label: "Email Jacob",
@@ -166,13 +175,8 @@ function SocialLinkButton({
               }
             />
           </View>
-          {isWeb && (((hovered || focused) && !dismissed) || copied) ? (
-            <View
-              accessibilityElementsHidden
-              className="absolute top-12 rounded-full border border-border/70 bg-surface px-2 py-1 shadow-md shadow-shadow/10"
-              importantForAccessibility="no-hide-descendants"
-              pointerEvents="none"
-            >
+          {isWeb && !compact && (((hovered || focused) && !dismissed) || copied) ? (
+            <HoverTooltip>
               {copied ? (
                 <FontAwesome6
                   name="check"
@@ -188,7 +192,7 @@ function SocialLinkButton({
                   {tooltipLabel}
                 </Text>
               )}
-            </View>
+            </HoverTooltip>
           ) : null}
         </>
       )}

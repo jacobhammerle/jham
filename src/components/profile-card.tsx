@@ -1,9 +1,10 @@
+import { ExternalLinkArrow } from "@/components/external-link-arrow";
+import { LocationRow } from "@/components/location-row";
 import { SocialLinks } from "@/components/social-links";
 import { tapHaptic } from "@/lib/haptics";
 import { openURL } from "@/lib/open-url";
 import { siteLinks, siteMeta } from "@/site";
-import { themeColors, type ThemeName } from "@/theme/tokens";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { type ThemeName } from "@/theme/tokens";
 import { Image } from "expo-image";
 import {
   Platform,
@@ -136,44 +137,18 @@ export function ProfileCard({
                 )}
               </View>
               {isWeb && (
-                <Text
-                  className={`ml-1 text-xs font-semibold text-accent transition duration-200 ease-out ${
-                    hovered || pressed ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  ↗
-                </Text>
+                <ExternalLinkArrow
+                  className="ml-1 text-accent"
+                  hovered={hovered}
+                  pressed={pressed}
+                />
               )}
             </View>
           )}
         </Pressable>
       </View>
 
-      <View
-        accessibilityLabel="Located in Cincinnati, Ohio"
-        accessibilityRole="text"
-        accessible
-        className={`${compact ? "mt-0" : "mt-1"} flex-row items-center justify-center gap-1.5`}
-      >
-        <View
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-        >
-          <FontAwesome6
-            name="location-dot"
-            solid
-            size={compact ? 10 : 12}
-            color={themeColors[themeName].subtle}
-          />
-        </View>
-        <Text
-          className={`text-center font-medium text-subtle ${
-            compact ? "text-xs leading-5" : "text-sm leading-6"
-          }`}
-        >
-          Cincinnati, OH
-        </Text>
-      </View>
+      <LocationRow compact={compact} themeName={themeName} />
 
       <SocialLinks compact={compact} themeName={themeName} />
     </View>

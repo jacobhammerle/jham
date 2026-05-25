@@ -2,8 +2,11 @@ export const siteLinks = {
   home: "https://hammerle.us/",
   expo: "https://expo.dev",
   github: "https://github.com/jacobhammerle",
+  linkedin: "https://www.linkedin.com/in/jacobhammerle/",
   x: "https://x.com/JacobHammerle",
   email: "mailto:jacob@hammerle.us",
+  appleMaps: "https://maps.apple.com/?q=Cincinnati%2C+OH",
+  googleMaps: "https://www.google.com/maps/search/?api=1&query=Cincinnati%2C+OH",
   minute: "https://apps.apple.com/us/app/minute-audio-journal/id6502869472",
 } as const;
 
@@ -45,6 +48,6 @@ export const personStructuredData = {
       addressRegion: "OH",
       addressCountry: "US",
     },
-    sameAs: [siteLinks.github, siteLinks.x],
+    sameAs: [siteLinks.github, siteLinks.linkedin, siteLinks.x],
   },
 } as const;
