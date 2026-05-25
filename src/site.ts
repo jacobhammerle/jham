@@ -13,7 +13,7 @@ export const siteMeta = {
     "Jacob Hammerle is a field engineer at Expo based in Cincinnati, Ohio.",
   author: "Jacob Hammerle",
   headshotUrl: `${siteLinks.home}jacob-hammerle.jpg`,
-  shareImageUrl: `${siteLinks.home}og-image.png`,
+  shareImageUrl: `${siteLinks.home}site-preview.png`,
 } as const;
 
 export const personStructuredData = {
