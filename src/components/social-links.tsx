@@ -33,7 +33,7 @@ const links: SocialLink[] = [
     icon: "x-twitter",
     brand: true,
     shapeClassName: "rounded-xl",
-    tooltipLabel: "Follow Along",
+    tooltipLabel: "Latest Activity",
   },
   {
     label: "Email Jacob",
