@@ -1,24 +1,14 @@
-# jham-website
+# Jacob Portfolio
 
-## Project setup
-```
-npm install
-```
+A small personal site built with Expo Router, NativeWind, and React Native Web.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Scripts
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
+```bash
+npm run web
+npm run ios
+npm run android
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+The main route lives in `src/app/index.tsx`; reusable UI lives in `src/components`.

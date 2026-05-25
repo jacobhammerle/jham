@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "jacob-portfolio",
+    "slug": "jacob-portfolio",
+    "version": "1.0.0",
+    "description": "Jacob Hammerle is a field engineer at Expo based in Cincinnati, Ohio.",
+    "orientation": "portrait",
+    "scheme": "jacobportfolio",
+    "userInterfaceStyle": "automatic",
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#020617"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5cba0c87-bbb1-45e7-ae43-bde8d11b151e"
+      }
+    }
+  }
+}
