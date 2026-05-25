@@ -2,8 +2,6 @@
 
 [hammerle.us](https://hammerle.us/) is my personal site. It is a simple profile page with links to my work and social accounts.
 
-![Preview of my personal site](./public/og-image.png)
-
 ## Features
 
 - Works on web, iOS, and Android
@@ -48,4 +46,4 @@ The finished build is placed in `dist/`.
 
 ## Deployment
 
-After this GitHub repository is connected to the EAS project, pushing to `master` runs [`.eas/workflows/deploy-web.yml`](./.eas/workflows/deploy-web.yml) and deploys the updated site to [hammerle.us](https://hammerle.us/).
+After this GitHub repository is connected to the EAS project, pushing site code, assets, or build configuration changes to `master` runs [`.eas/workflows/deploy-web.yml`](./.eas/workflows/deploy-web.yml) and deploys the updated site to [hammerle.us](https://hammerle.us/).
