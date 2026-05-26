@@ -58,6 +58,29 @@
   animation: external-link-arrow-enter 220ms ease-out 1;
 }
 
+@keyframes portrait-skeleton-shimmer {
+  from {
+    transform: translateX(-30%);
+  }
+  to {
+    transform: translateX(330%);
+  }
+}
+
+.portrait-skeleton {
+  background-color: rgb(var(--jh-surface-muted));
+}
+
+.portrait-skeleton-shimmer {
+  animation: portrait-skeleton-shimmer 1.35s ease-in-out infinite;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--jh-accent) / 0.13),
+    transparent
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

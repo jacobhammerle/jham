@@ -120,9 +120,7 @@ export function LocationRow({
       onBlur={canShowLocalTime ? () => setShowLocalTime(false) : undefined}
       onFocus={canShowLocalTime ? showCincinnatiTime : undefined}
       onHoverIn={canShowLocalTime ? showCincinnatiTime : undefined}
-      onHoverOut={
-        canShowLocalTime ? () => setShowLocalTime(false) : undefined
-      }
+      onHoverOut={canShowLocalTime ? () => setShowLocalTime(false) : undefined}
       onPress={() => {
         tapHaptic();
         setShowLocalTime(false);
@@ -173,7 +171,7 @@ export function LocationRow({
             />
           )}
           {canShowLocalTime && showLocalTime && (
-            <HoverTooltip positionClassName="top-7">
+            <HoverTooltip positionClassName="left-full top-1/2 ml-2 -translate-y-1/2">
               <Text
                 className="text-xs font-medium text-primary"
                 numberOfLines={1}

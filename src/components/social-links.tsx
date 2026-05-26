@@ -1,4 +1,5 @@
 import { HoverTooltip } from "@/components/hover-tooltip";
+import { useDismissibleTooltip } from "@/hooks/use-dismissible-tooltip";
 import { longPressHaptic, tapHaptic } from "@/lib/haptics";
 import { openURL } from "@/lib/open-url";
 import { siteLinks } from "@/site";
@@ -63,7 +64,7 @@ export function SocialLinks({
 }) {
   return (
     <View
-      className={`${compact ? "mt-4 gap-2" : "mt-7 gap-3"} flex-row flex-wrap justify-center`}
+      className={`${compact ? "mt-4 gap-1.5" : "mt-7 gap-2"} flex-row flex-wrap justify-center`}
     >
       {links.map((link) => (
         <SocialLinkButton
@@ -88,8 +89,13 @@ function SocialLinkButton({
   compact,
 }: SocialLink & { compact: boolean; themeName: ThemeName }) {
   const [copied, setCopied] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
-  const [focused, setFocused] = useState(false);
+  const {
+    blurTooltip,
+    dismissTooltip,
+    focusTooltip,
+    resetDismissal,
+    shouldShowTooltip,
+  } = useDismissibleTooltip();
   const emailAddress = href.startsWith("mailto:")
     ? href.replace("mailto:", "")
     : "";
@@ -132,22 +138,14 @@ function SocialLinkButton({
       accessibilityRole="link"
       className={`${compact ? "h-10 w-10" : "h-11 w-11"} items-center justify-center border border-border/70 bg-surface/70 shadow-sm shadow-shadow/0 ${webClassName} ${shapeClassName}`}
       hitSlop={8}
-      onBlur={isWeb ? () => setFocused(false) : undefined}
-      onFocus={
-        isWeb
-          ? () => {
-              setDismissed(false);
-              setFocused(true);
-            }
-          : undefined
-      }
-      onHoverIn={isWeb ? () => setDismissed(false) : undefined}
-      onHoverOut={isWeb ? () => setDismissed(false) : undefined}
+      onBlur={isWeb ? blurTooltip : undefined}
+      onFocus={isWeb ? focusTooltip : undefined}
+      onHoverIn={isWeb ? resetDismissal : undefined}
+      onHoverOut={isWeb ? resetDismissal : undefined}
       onLongPress={emailAddress ? () => void copyEmailAddress() : undefined}
       onPress={() => {
         tapHaptic();
-        setDismissed(true);
-        setFocused(false);
+        dismissTooltip();
         openURL(href);
       }}
       style={({ pressed }) => ({
@@ -175,7 +173,7 @@ function SocialLinkButton({
               }
             />
           </View>
-          {isWeb && !compact && (((hovered || focused) && !dismissed) || copied) ? (
+          {isWeb && !compact && (shouldShowTooltip(hovered) || copied) ? (
             <HoverTooltip>
               {copied ? (
                 <FontAwesome6

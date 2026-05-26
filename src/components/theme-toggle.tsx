@@ -1,7 +1,7 @@
 import { HoverTooltip } from "@/components/hover-tooltip";
+import { useDismissibleTooltip } from "@/hooks/use-dismissible-tooltip";
 import { themeColors, type ThemeName } from "@/theme/tokens";
 import { SymbolView } from "expo-symbols";
-import { useState } from "react";
 import { Platform, Pressable, Text, View } from "react-native";
 
 const isWeb = Platform.OS === "web";
@@ -82,8 +82,13 @@ function ThemeToggleButton({
   tooltipLabel: string;
   onPress: () => void;
 }) {
-  const [dismissed, setDismissed] = useState(false);
-  const [focused, setFocused] = useState(false);
+  const {
+    blurTooltip,
+    dismissTooltip,
+    focusTooltip,
+    resetDismissal,
+    shouldShowTooltip,
+  } = useDismissibleTooltip();
   const webClassName = isWeb
     ? "transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 hover:bg-surface/40"
     : "";
@@ -97,20 +102,12 @@ function ThemeToggleButton({
       {...(isWeb ? { "aria-checked": isActive } : {})}
       className={`z-10 h-9 w-9 items-center justify-center rounded-full ${webClassName}`}
       hitSlop={10}
-      onBlur={isWeb ? () => setFocused(false) : undefined}
-      onFocus={
-        isWeb
-          ? () => {
-              setDismissed(false);
-              setFocused(true);
-            }
-          : undefined
-      }
-      onHoverIn={isWeb ? () => setDismissed(false) : undefined}
-      onHoverOut={isWeb ? () => setDismissed(false) : undefined}
+      onBlur={isWeb ? blurTooltip : undefined}
+      onFocus={isWeb ? focusTooltip : undefined}
+      onHoverIn={isWeb ? resetDismissal : undefined}
+      onHoverOut={isWeb ? resetDismissal : undefined}
       onPress={() => {
-        setDismissed(true);
-        setFocused(false);
+        dismissTooltip();
         onPress();
       }}
       style={({ pressed }) => ({
@@ -120,7 +117,7 @@ function ThemeToggleButton({
       {({ hovered }) => (
         <>
           {children}
-          {Platform.OS === "web" && (focused || hovered) && !dismissed && (
+          {isWeb && shouldShowTooltip(hovered) && (
             <HoverTooltip>
               <Text className="text-xs font-medium text-primary">
                 {tooltipLabel}

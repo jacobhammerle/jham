@@ -40,11 +40,15 @@ export function SiteHead() {
       <meta property="og:title" content={siteMeta.title} />
       <meta property="og:description" content={siteMeta.description} />
       <meta property="og:image" content={siteMeta.shareImageUrl} />
-      <meta property="og:image:alt" content={siteMeta.title} />
+      <meta property="og:image:type" content={siteMeta.shareImageType} />
+      <meta property="og:image:width" content={siteMeta.shareImageWidth} />
+      <meta property="og:image:height" content={siteMeta.shareImageHeight} />
+      <meta property="og:image:alt" content={siteMeta.shareImageAlt} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={siteMeta.title} />
       <meta name="twitter:description" content={siteMeta.description} />
       <meta name="twitter:image" content={siteMeta.shareImageUrl} />
+      <meta name="twitter:image:alt" content={siteMeta.shareImageAlt} />
       <script type="application/ld+json">
         {JSON.stringify(personStructuredData)}
       </script>

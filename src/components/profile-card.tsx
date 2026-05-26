@@ -1,32 +1,10 @@
-import { ExternalLinkArrow } from "@/components/external-link-arrow";
 import { LocationRow } from "@/components/location-row";
+import { ProfilePortrait } from "@/components/profile-portrait";
+import { ProfileRole } from "@/components/profile-role";
 import { SocialLinks } from "@/components/social-links";
-import { tapHaptic } from "@/lib/haptics";
-import { openURL } from "@/lib/open-url";
-import { siteLinks, siteMeta } from "@/site";
+import { siteMeta } from "@/site";
 import { type ThemeName } from "@/theme/tokens";
-import { Image } from "expo-image";
-import {
-  Platform,
-  Pressable,
-  Text,
-  View,
-  type ImageStyle,
-  type StyleProp,
-} from "react-native";
-
-const isWeb = Platform.OS === "web";
-const headshotSource = require("../../assets/images/headshot.jpg");
-const nativeHeadshotStyle: StyleProp<ImageStyle> = {
-  borderRadius: 48,
-  height: 96,
-  width: 96,
-};
-const compactNativeHeadshotStyle: StyleProp<ImageStyle> = {
-  borderRadius: 34,
-  height: 68,
-  width: 68,
-};
+import { Text, View } from "react-native";
 
 export function ProfileCard({
   compact = false,
@@ -37,49 +15,7 @@ export function ProfileCard({
 }) {
   return (
     <View className="items-center">
-      <Pressable
-        accessibilityLabel="Jacob Hammerle on X"
-        accessibilityHint="Opens Jacob's X profile"
-        accessibilityRole="link"
-        className={`${compact ? "mb-3" : "mb-5"} rounded-full border bg-surface/80 p-1 shadow-2xl ${
-          isWeb
-            ? "transition duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 hover:border-accent/45 hover:bg-surface hover:shadow-accent/15"
-            : ""
-        } ${
-          themeName === "dark"
-            ? "border-accent/25 shadow-accent/15"
-            : "border-border/80 shadow-shadow/10"
-        }`}
-        onPress={() => {
-          tapHaptic();
-          openURL(siteLinks.x);
-        }}
-        style={({ pressed }) => ({
-          opacity: pressed ? 0.86 : 1,
-        })}
-      >
-        <Image
-          accessibilityLabel="Portrait of Jacob Hammerle"
-          source={headshotSource}
-          placeholder={{ blurhash: "L7Pj|Xt700~q%Mof~qRjRjofxuof" }}
-          placeholderContentFit="cover"
-          contentFit="cover"
-          transition={220}
-          className={
-            compact
-              ? "h-[68px] w-[68px] rounded-full"
-              : "h-24 w-24 rounded-full md:h-28 md:w-28"
-          }
-          style={
-            isWeb
-              ? undefined
-              : compact
-                ? compactNativeHeadshotStyle
-                : nativeHeadshotStyle
-          }
-        />
-      </Pressable>
-
+      <ProfilePortrait compact={compact} themeName={themeName} />
       <Text
         accessibilityRole="header"
         className={`max-w-[720px] px-2 text-center font-black leading-tight tracking-normal text-primary ${
@@ -88,68 +24,8 @@ export function ProfileCard({
       >
         {siteMeta.title}
       </Text>
-
-      <View
-        className={`${compact ? "mt-1" : "mt-2 md:mt-3"} max-w-[720px] flex-row flex-wrap items-center justify-center px-2`}
-      >
-        <Text
-          className={`text-center text-secondary ${
-            compact ? "text-sm leading-5" : "text-base leading-7 md:text-lg"
-          }`}
-        >
-          Field Engineering{" "}
-        </Text>
-        <Pressable
-          accessibilityLabel="Expo website"
-          accessibilityHint="Opens expo.dev"
-          accessibilityRole="link"
-          className={`rounded-md ${
-            isWeb
-              ? "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
-              : ""
-          }`}
-          onPress={() => {
-            tapHaptic();
-            openURL(siteLinks.expo);
-          }}
-          style={({ pressed }) => ({
-            opacity: pressed ? 0.78 : 1,
-          })}
-        >
-          {({ hovered, pressed }) => (
-            <View className="flex-row items-center">
-              <View className="relative">
-                <Text
-                  className={`font-semibold text-accent ${
-                    compact
-                      ? "text-sm leading-5"
-                      : "text-base leading-7 md:text-lg"
-                  }`}
-                >
-                  @Expo
-                </Text>
-                {isWeb && (
-                  <View
-                    className={`absolute bottom-px left-0 h-px bg-accent transition-all duration-200 ease-out ${
-                      hovered || pressed ? "w-full opacity-100" : "w-0 opacity-0"
-                    }`}
-                  />
-                )}
-              </View>
-              {isWeb && (
-                <ExternalLinkArrow
-                  className="ml-1 text-accent"
-                  hovered={hovered}
-                  pressed={pressed}
-                />
-              )}
-            </View>
-          )}
-        </Pressable>
-      </View>
-
+      <ProfileRole compact={compact} />
       <LocationRow compact={compact} themeName={themeName} />
-
       <SocialLinks compact={compact} themeName={themeName} />
     </View>
   );

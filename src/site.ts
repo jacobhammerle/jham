@@ -6,7 +6,8 @@ export const siteLinks = {
   x: "https://x.com/JacobHammerle",
   email: "mailto:jacob@hammerle.us",
   appleMaps: "https://maps.apple.com/?q=Cincinnati%2C+OH",
-  googleMaps: "https://www.google.com/maps/search/?api=1&query=Cincinnati%2C+OH",
+  googleMaps:
+    "https://www.google.com/maps/search/?api=1&query=Cincinnati%2C+OH",
   minute: "https://apps.apple.com/us/app/minute-audio-journal/id6502869472",
 } as const;
 
@@ -16,7 +17,12 @@ export const siteMeta = {
     "Jacob Hammerle is a field engineer at Expo based in Cincinnati, Ohio.",
   author: "Jacob Hammerle",
   headshotUrl: `${siteLinks.home}jacob-hammerle.jpg`,
-  shareImageUrl: `${siteLinks.home}site-preview.png`,
+  shareImageUrl: `${siteLinks.home}site-preview.jpg`,
+  shareImageAlt:
+    "Jacob Hammerle portfolio card with a blueprint-style Cincinnati river illustration.",
+  shareImageType: "image/jpeg",
+  shareImageWidth: "1200",
+  shareImageHeight: "630",
 } as const;
 
 export const personStructuredData = {

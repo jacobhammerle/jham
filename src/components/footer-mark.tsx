@@ -19,9 +19,21 @@ export function FooterMark() {
     <View className="absolute bottom-6 left-0 right-0 mx-auto items-center gap-3 px-4">
       <MinuteLink />
       <View className="flex-row items-center gap-2">
-        <HomeLink />
+        <FooterTextLink
+          accessibilityHint="Opens the home page"
+          accessibilityLabel="Open hammerle.us"
+          href={siteLinks.home}
+        >
+          hammerle.us
+        </FooterTextLink>
         <FooterSeparator />
-        <BuiltWithExpoLink />
+        <FooterTextLink
+          accessibilityHint="Opens expo.dev"
+          accessibilityLabel="Built with Expo"
+          href={siteLinks.expo}
+        >
+          Built with Expo
+        </FooterTextLink>
         <FooterSeparator />
         <Text className="text-[11px] font-medium text-subtle">
           © {currentYear}
@@ -72,11 +84,21 @@ function MinuteLink() {
   );
 }
 
-function HomeLink() {
+function FooterTextLink({
+  accessibilityHint,
+  accessibilityLabel,
+  children,
+  href,
+}: {
+  accessibilityHint: string;
+  accessibilityLabel: string;
+  children: React.ReactNode;
+  href: string;
+}) {
   return (
     <Pressable
-      accessibilityLabel="Open hammerle.us"
-      accessibilityHint="Opens the home page"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
       accessibilityRole="link"
       className={`rounded-sm ${
         isWeb
@@ -85,7 +107,7 @@ function HomeLink() {
       }`}
       onPress={() => {
         tapHaptic();
-        openURL(siteLinks.home);
+        openURL(href);
       }}
       style={({ pressed }) => ({
         opacity: pressed ? 0.78 : 1,
@@ -97,7 +119,7 @@ function HomeLink() {
             hovered || pressed ? "text-accent underline" : ""
           }`}
         >
-          hammerle.us
+          {children}
         </Text>
       )}
     </Pressable>
@@ -106,36 +128,4 @@ function HomeLink() {
 
 function FooterSeparator() {
   return <Text className="text-[11px] font-medium text-subtle/60">·</Text>;
-}
-
-function BuiltWithExpoLink() {
-  return (
-    <Pressable
-      accessibilityLabel="Built with Expo"
-      accessibilityHint="Opens expo.dev"
-      accessibilityRole="link"
-      className={`rounded-sm ${
-        isWeb
-          ? "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
-          : ""
-      }`}
-      onPress={() => {
-        tapHaptic();
-        openURL(siteLinks.expo);
-      }}
-      style={({ pressed }) => ({
-        opacity: pressed ? 0.78 : 1,
-      })}
-    >
-      {({ hovered, pressed }) => (
-        <Text
-          className={`text-[11px] font-medium text-subtle ${
-            hovered || pressed ? "text-accent underline" : ""
-          }`}
-        >
-          Built with Expo
-        </Text>
-      )}
-    </Pressable>
-  );
 }
