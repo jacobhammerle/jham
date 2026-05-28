@@ -1,5 +1,10 @@
 import { tapHaptic } from "@/lib/haptics";
 import { openURL } from "@/lib/open-url";
+import {
+  isBannerProfileLayout,
+  isCompactProfileLayout,
+  type ProfileLayout,
+} from "@/components/profile-layout";
 import { siteLinks } from "@/site";
 import { type ThemeName } from "@/theme/tokens";
 import { Image } from "expo-image";
@@ -24,22 +29,29 @@ const compactNativeHeadshotStyle: StyleProp<ImageStyle> = {
   height: 68,
   width: 68,
 };
+const bannerNativeHeadshotStyle: StyleProp<ImageStyle> = {
+  borderRadius: 36,
+  height: 72,
+  width: 72,
+};
 
 export function ProfilePortrait({
-  compact = false,
+  layout = "default",
   themeName,
 }: {
-  compact?: boolean;
+  layout?: ProfileLayout;
   themeName: ThemeName;
 }) {
   const [displayed, setDisplayed] = useState(!isWeb);
+  const banner = isBannerProfileLayout(layout);
+  const compact = isCompactProfileLayout(layout);
 
   return (
     <Pressable
       accessibilityLabel="Jacob Hammerle on X"
       accessibilityHint="Opens Jacob's X profile"
       accessibilityRole="link"
-      className={`${compact ? "mb-3" : "mb-5"} rounded-full border bg-surface/80 p-1 shadow-2xl ${
+      className={`${compact ? "mb-3" : banner ? "mb-3" : "mb-5"} rounded-full border bg-surface/80 p-1 shadow-2xl ${
         isWeb
           ? "transition duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 hover:border-accent/45 hover:bg-surface hover:shadow-accent/15"
           : ""
@@ -81,7 +93,7 @@ export function ProfilePortrait({
           contentFit="cover"
           onDisplay={isWeb ? () => setDisplayed(true) : undefined}
           transition={220}
-          className={`${compact ? "h-[68px] w-[68px]" : "h-24 w-24 md:h-28 md:w-28"} rounded-full ${
+          className={`${compact ? "h-[68px] w-[68px]" : banner ? "h-[72px] w-[72px]" : "h-24 w-24 md:h-28 md:w-28"} rounded-full ${
             isWeb
               ? `transition-opacity duration-300 ease-out ${
                   displayed ? "opacity-100" : "opacity-0"
@@ -93,7 +105,9 @@ export function ProfilePortrait({
               ? undefined
               : compact
                 ? compactNativeHeadshotStyle
-                : nativeHeadshotStyle
+                : banner
+                  ? bannerNativeHeadshotStyle
+                  : nativeHeadshotStyle
           }
         />
       </View>

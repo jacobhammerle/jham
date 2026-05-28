@@ -1,4 +1,9 @@
 import { HoverTooltip } from "@/components/hover-tooltip";
+import {
+  isBannerProfileLayout,
+  isCompactProfileLayout,
+  type ProfileLayout,
+} from "@/components/profile-layout";
 import { useDismissibleTooltip } from "@/hooks/use-dismissible-tooltip";
 import { longPressHaptic, tapHaptic } from "@/lib/haptics";
 import { openURL } from "@/lib/open-url";
@@ -56,20 +61,23 @@ const links: SocialLink[] = [
 ];
 
 export function SocialLinks({
-  compact = false,
+  layout = "default",
   themeName,
 }: {
-  compact?: boolean;
+  layout?: ProfileLayout;
   themeName: ThemeName;
 }) {
+  const banner = isBannerProfileLayout(layout);
+  const compact = isCompactProfileLayout(layout);
+
   return (
     <View
-      className={`${compact ? "mt-4 gap-1.5" : "mt-7 gap-2"} flex-row flex-wrap justify-center`}
+      className={`${compact ? "mt-4 gap-1.5" : banner ? "mt-3 gap-1.5" : "mt-7 gap-2"} flex-row flex-wrap justify-center`}
     >
       {links.map((link) => (
         <SocialLinkButton
-          compact={compact}
           key={link.href}
+          layout={layout}
           {...link}
           themeName={themeName}
         />
@@ -86,9 +94,11 @@ function SocialLinkButton({
   shapeClassName,
   themeName,
   tooltipLabel,
-  compact,
-}: SocialLink & { compact: boolean; themeName: ThemeName }) {
+  layout,
+}: SocialLink & { layout: ProfileLayout; themeName: ThemeName }) {
   const [copied, setCopied] = useState(false);
+  const banner = isBannerProfileLayout(layout);
+  const compact = isCompactProfileLayout(layout);
   const {
     blurTooltip,
     dismissTooltip,
@@ -136,7 +146,7 @@ function SocialLinkButton({
           : "Opens a new site"
       }
       accessibilityRole="link"
-      className={`${compact ? "h-10 w-10" : "h-11 w-11"} items-center justify-center border border-border/70 bg-surface/70 shadow-sm shadow-shadow/0 ${webClassName} ${shapeClassName}`}
+      className={`${compact ? "h-10 w-10" : banner ? "h-9 w-9" : "h-11 w-11"} items-center justify-center border border-border/70 bg-surface/70 shadow-sm shadow-shadow/0 ${webClassName} ${shapeClassName}`}
       hitSlop={8}
       onBlur={isWeb ? blurTooltip : undefined}
       onFocus={isWeb ? focusTooltip : undefined}
@@ -165,7 +175,7 @@ function SocialLinkButton({
               name={icon}
               brand={brand}
               solid={!brand}
-              size={compact ? 17 : 19}
+              size={compact ? 17 : banner ? 16 : 19}
               color={
                 hovered || pressed
                   ? themeColors[themeName].accent
@@ -173,7 +183,7 @@ function SocialLinkButton({
               }
             />
           </View>
-          {isWeb && !compact && (shouldShowTooltip(hovered) || copied) ? (
+          {isWeb && !compact && !banner && (shouldShowTooltip(hovered) || copied) ? (
             <HoverTooltip>
               {copied ? (
                 <FontAwesome6

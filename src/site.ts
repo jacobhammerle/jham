@@ -17,12 +17,12 @@ export const siteMeta = {
     "Jacob Hammerle is a field engineer at Expo based in Cincinnati, Ohio.",
   author: "Jacob Hammerle",
   headshotUrl: `${siteLinks.home}jacob-hammerle.jpg`,
-  shareImageUrl: `${siteLinks.home}site-preview.jpg`,
+  shareImageUrl: `${siteLinks.home}site-preview.png`,
   shareImageAlt:
-    "Jacob Hammerle portfolio card with a blueprint-style Cincinnati river illustration.",
-  shareImageType: "image/jpeg",
-  shareImageWidth: "1200",
-  shareImageHeight: "630",
+    "Light mode Jacob Hammerle software developer profile card with a rounded email field and cyan blueprint accents.",
+  shareImageType: "image/png",
+  shareImageWidth: "1428",
+  shareImageHeight: "746",
 } as const;
 
 export const personStructuredData = {

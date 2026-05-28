@@ -10,6 +10,7 @@ import {
 
 import { SketchGridBackground } from "@/components/sketch-grid-background";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { themeVars, type ThemeName } from "@/theme/tokens";
 
 type ThemedScreenProps = {
@@ -21,10 +22,12 @@ export function ThemedScreen({
   children,
   hideThemeToggle = false,
 }: ThemedScreenProps) {
+  const hydrated = useHydrated();
   const systemScheme = useSystemColorScheme();
   const systemTheme: ThemeName = systemScheme === "dark" ? "dark" : "light";
   const [manualTheme, setManualTheme] = useState<ThemeName | null>(null);
-  const themeName = manualTheme ?? systemTheme;
+  const hasBrowserTheme = Platform.OS !== "web" || hydrated;
+  const themeName = manualTheme ?? (hasBrowserTheme ? systemTheme : "light");
 
   function handleThemeChange(theme: ThemeName) {
     setManualTheme(theme);
