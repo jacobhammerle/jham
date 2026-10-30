@@ -1,10 +1,14 @@
 import { HoverTooltip } from "@/components/hover-tooltip";
 import { useDismissibleTooltip } from "@/hooks/use-dismissible-tooltip";
 import { themeColors, type ThemeName } from "@/theme/tokens";
-import { SymbolView } from "expo-symbols";
+import { SiteIcon } from "@/components/site-icon";
 import { Platform, Pressable, Text, View } from "react-native";
 
 const isWeb = Platform.OS === "web";
+const themeOptions = [
+  { theme: "light", label: "Light", icon: "sun" },
+  { theme: "dark", label: "Dark", icon: "moon" },
+] as const;
 
 type ThemeToggleProps = {
   themeName: ThemeName;
@@ -26,45 +30,23 @@ export function ThemeToggle({ themeName, onThemeChange }: ThemeToggleProps) {
         importantForAccessibility="no-hide-descendants"
         pointerEvents="none"
       />
-      <ThemeToggleButton
-        accessibilityLabel="Use light theme"
-        isActive={themeName === "light"}
-        tooltipLabel="Light"
-        onPress={() => onThemeChange("light")}
-      >
-        <SymbolView
-          name={{
-            ios: "sun.max.fill",
-            android: "light_mode",
-            web: "light_mode",
-          }}
-          fallback={<Text className="text-primary">☀</Text>}
-          size={15}
-          tintColor={
-            themeName === "light"
-              ? themeColors[themeName].primary
-              : themeColors[themeName].subtle
-          }
-        />
-      </ThemeToggleButton>
-
-      <ThemeToggleButton
-        accessibilityLabel="Use dark theme"
-        isActive={themeName === "dark"}
-        tooltipLabel="Dark"
-        onPress={() => onThemeChange("dark")}
-      >
-        <SymbolView
-          name={{ ios: "moon.fill", android: "dark_mode", web: "dark_mode" }}
-          fallback={<Text className="text-primary">☾</Text>}
-          size={15}
-          tintColor={
-            themeName === "dark"
-              ? themeColors[themeName].primary
-              : themeColors[themeName].subtle
-          }
-        />
-      </ThemeToggleButton>
+      {themeOptions.map(({ theme, label, icon }) => (
+        <ThemeToggleButton
+          key={theme}
+          accessibilityLabel={`Use ${theme} theme`}
+          isActive={themeName === theme}
+          tooltipLabel={label}
+          onPress={() => onThemeChange(theme)}
+        >
+          <SiteIcon
+            name={icon}
+            size={15}
+            color={
+              themeColors[themeName][themeName === theme ? "primary" : "subtle"]
+            }
+          />
+        </ThemeToggleButton>
+      ))}
     </View>
   );
 }

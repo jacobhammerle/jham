@@ -1,12 +1,12 @@
 import { ExternalLinkArrow } from "@/components/external-link-arrow";
 import { HoverTooltip } from "@/components/hover-tooltip";
-import { tapHaptic } from "@/lib/haptics";
-import { openURL } from "@/lib/open-url";
+import { SiteIcon } from "@/components/site-icon";
+import { SiteLink } from "@/components/site-link";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { siteLinks } from "@/site";
 import { themeColors, type ThemeName } from "@/theme/tokens";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useEffect, useState } from "react";
-import { Platform, Pressable, Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 const isWeb = Platform.OS === "web";
 const cincinnatiTimeFormatter = new Intl.DateTimeFormat("en-US", {
@@ -28,16 +28,17 @@ const cincinnatiClockFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/New_York",
 });
 
-function openCincinnatiMap() {
+function getCincinnatiMapUrl(hasBrowser: boolean) {
   const isAppleDevice =
     Platform.OS === "ios" ||
     (isWeb &&
+      hasBrowser &&
       typeof navigator !== "undefined" &&
       /Mac|iPhone|iPad|iPod/i.test(
         `${navigator.platform} ${navigator.userAgent}`,
       ));
 
-  openURL(isAppleDevice ? siteLinks.appleMaps : siteLinks.googleMaps);
+  return isAppleDevice ? siteLinks.appleMaps : siteLinks.googleMaps;
 }
 
 function getCincinnatiTimeLabel() {
@@ -59,22 +60,27 @@ export function LocationRow({
   compact?: boolean;
   themeName: ThemeName;
 }) {
+  const hydrated = useHydrated();
   const [showLocalTime, setShowLocalTime] = useState(false);
-  const [localTimeLabel, setLocalTimeLabel] = useState(getCincinnatiTimeLabel);
+  const [localTimeLabel, setLocalTimeLabel] = useState("");
   const canShowLocalTime =
-    isWeb && !compact && hasDifferentLocalTimeFromCincinnati();
+    isWeb && hydrated && !compact && hasDifferentLocalTimeFromCincinnati();
 
   useEffect(() => {
     if (!showLocalTime || !canShowLocalTime) {
       return;
     }
 
-    const interval = setInterval(() => {
-      setLocalTimeLabel(getCincinnatiTimeLabel());
-    }, 1000);
+    // Update on the next minute boundary instead of polling every second.
+    const timeout = setTimeout(
+      () => {
+        setLocalTimeLabel(getCincinnatiTimeLabel());
+      },
+      60_000 - (Date.now() % 60_000),
+    );
 
-    return () => clearInterval(interval);
-  }, [canShowLocalTime, showLocalTime]);
+    return () => clearTimeout(timeout);
+  }, [canShowLocalTime, showLocalTime, localTimeLabel]);
 
   function showCincinnatiTime() {
     setLocalTimeLabel(getCincinnatiTimeLabel());
@@ -93,9 +99,8 @@ export function LocationRow({
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
         >
-          <FontAwesome6
+          <SiteIcon
             name="location-dot"
-            solid
             size={10}
             color={themeColors[themeName].subtle}
           />
@@ -108,10 +113,10 @@ export function LocationRow({
   }
 
   return (
-    <Pressable
+    <SiteLink
+      href={getCincinnatiMapUrl(hydrated)}
       accessibilityLabel="View Cincinnati, Ohio on a map"
       accessibilityHint="Opens Cincinnati in a maps app"
-      accessibilityRole="link"
       className={`mt-1 flex-row items-center justify-center gap-1.5 rounded-md ${
         isWeb
           ? "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
@@ -122,9 +127,7 @@ export function LocationRow({
       onHoverIn={canShowLocalTime ? showCincinnatiTime : undefined}
       onHoverOut={canShowLocalTime ? () => setShowLocalTime(false) : undefined}
       onPress={() => {
-        tapHaptic();
         setShowLocalTime(false);
-        openCincinnatiMap();
       }}
       style={({ pressed }) => ({
         opacity: pressed ? 0.78 : 1,
@@ -136,9 +139,8 @@ export function LocationRow({
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
-            <FontAwesome6
+            <SiteIcon
               name="location-dot"
-              solid
               size={12}
               color={
                 hovered || pressed
@@ -182,6 +184,6 @@ export function LocationRow({
           )}
         </>
       )}
-    </Pressable>
+    </SiteLink>
   );
 }

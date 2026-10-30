@@ -26,23 +26,29 @@ npm run web
 
 ## Scripts
 
-| Command           | Description                          |
-| ----------------- | ------------------------------------ |
-| `npm start`       | Start the Expo development server    |
-| `npm run web`     | Start the site in a browser          |
-| `npm run ios`     | Start the app in the iOS Simulator   |
-| `npm run android` | Start the app in an Android emulator |
-| `npm run lint`    | Run Expo's ESLint configuration      |
+| Command             | Description                          |
+| ------------------- | ------------------------------------ |
+| `npm start`         | Start the Expo development server    |
+| `npm run web`       | Start the site in a browser          |
+| `npm run ios`       | Start the app in the iOS Simulator   |
+| `npm run android`   | Start the app in an Android emulator |
+| `npm run lint`      | Run Expo's ESLint configuration      |
+| `npm run typecheck` | Check TypeScript types               |
+| `npm run build:web` | Export the production website        |
 
 ## Production Web Build
 
 Build the static website with:
 
 ```bash
-npx expo export --platform web
+npm run build:web
 ```
 
 The finished build is placed in `dist/`.
+
+The portrait uses `public/jacob-hammerle-avatar.jpg` on every platform, a 336 × 336 image sized for the largest avatar at 3× pixel density. The full-size original remains in `assets/images/headshot.jpg`. Responsive spacing, typography, and image sizes are defined together in `src/components/profile-layout.ts`.
+
+Web icons are inline SVGs, so the page does not need icon font downloads. They are from Font Awesome Free 6.7.2 ([license and attribution](./public/fontawesome-license.txt)); native platforms use `@expo/vector-icons`.
 
 ## Deployment
 

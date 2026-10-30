@@ -1,11 +1,11 @@
 import Head from "expo-router/head";
 
-import { personStructuredData, siteLinks, siteMeta } from "@/site";
+import { personStructuredData, siteAssets, siteLinks, siteMeta } from "@/site";
 
 export function SiteHead() {
   return (
     <Head>
-      <title>{siteMeta.title}</title>
+      <title>{siteMeta.pageTitle}</title>
       <meta name="description" content={siteMeta.description} />
       <meta name="author" content={siteMeta.author} />
       <meta name="robots" content="index, follow" />
@@ -21,6 +21,12 @@ export function SiteHead() {
         media="(prefers-color-scheme: light)"
       />
       <link rel="canonical" href={siteLinks.home} />
+      <link
+        rel="preload"
+        as="image"
+        href={siteAssets.avatar}
+        fetchPriority="high"
+      />
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       <link rel="manifest" href="/site.webmanifest" />
@@ -36,8 +42,9 @@ export function SiteHead() {
       <meta name="mobile-web-app-capable" content="yes" />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={siteMeta.title} />
+      <meta property="og:locale" content="en_US" />
       <meta property="og:url" content={siteLinks.home} />
-      <meta property="og:title" content={siteMeta.title} />
+      <meta property="og:title" content={siteMeta.pageTitle} />
       <meta property="og:description" content={siteMeta.description} />
       <meta property="og:image" content={siteMeta.shareImageUrl} />
       <meta property="og:image:type" content={siteMeta.shareImageType} />
@@ -45,7 +52,8 @@ export function SiteHead() {
       <meta property="og:image:height" content={siteMeta.shareImageHeight} />
       <meta property="og:image:alt" content={siteMeta.shareImageAlt} />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={siteMeta.title} />
+      <meta name="twitter:creator" content="@JacobHammerle" />
+      <meta name="twitter:title" content={siteMeta.pageTitle} />
       <meta name="twitter:description" content={siteMeta.description} />
       <meta name="twitter:image" content={siteMeta.shareImageUrl} />
       <meta name="twitter:image:alt" content={siteMeta.shareImageAlt} />

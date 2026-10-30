@@ -1,8 +1,7 @@
 import { ExternalLinkArrow } from "@/components/external-link-arrow";
-import { tapHaptic } from "@/lib/haptics";
-import { openURL } from "@/lib/open-url";
-import { siteLinks } from "@/site";
-import { Platform, Pressable, Text, View } from "react-native";
+import { SiteLink } from "@/components/site-link";
+import { siteLinks, type SiteHref } from "@/site";
+import { Platform, Text, View } from "react-native";
 
 const isWeb = Platform.OS === "web";
 
@@ -16,7 +15,10 @@ export function FooterMark() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <View className="absolute bottom-6 left-0 right-0 mx-auto items-center gap-3 px-4">
+    <View
+      role="contentinfo"
+      className="absolute bottom-6 left-0 right-0 mx-auto items-center gap-3 px-4"
+    >
       <MinuteLink />
       <View className="flex-row items-center gap-2">
         <FooterTextLink
@@ -45,15 +47,11 @@ export function FooterMark() {
 
 function MinuteLink() {
   return (
-    <Pressable
+    <SiteLink
+      href={siteLinks.minute}
       accessibilityLabel="Try Minute audio journal"
       accessibilityHint="Opens Minute on the App Store"
-      accessibilityRole="link"
       className={minutePillClassName}
-      onPress={() => {
-        tapHaptic();
-        openURL(siteLinks.minute);
-      }}
       style={({ pressed }) => ({
         opacity: pressed ? 0.86 : 1,
       })}
@@ -66,21 +64,21 @@ function MinuteLink() {
             } ${hovered || pressed ? "bg-orange-400" : "bg-orange-500"}`}
           />
           <Text
-            className={`text-xs font-semibold tracking-[0.04em] text-orange-700 dark:text-orange-300 ${
+            className={`text-xs font-semibold tracking-[0.04em] text-minute ${
               hovered || pressed ? "underline" : ""
             }`}
           >
             Try Minute!
           </Text>
           <ExternalLinkArrow
-            className="text-orange-700 dark:text-orange-300"
+            className="text-minute"
             hovered={hovered}
             motion="flight"
             pressed={pressed}
           />
         </View>
       )}
-    </Pressable>
+    </SiteLink>
   );
 }
 
@@ -93,22 +91,18 @@ function FooterTextLink({
   accessibilityHint: string;
   accessibilityLabel: string;
   children: React.ReactNode;
-  href: string;
+  href: SiteHref;
 }) {
   return (
-    <Pressable
+    <SiteLink
+      href={href}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
-      accessibilityRole="link"
       className={`rounded-sm ${
         isWeb
           ? "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
           : ""
       }`}
-      onPress={() => {
-        tapHaptic();
-        openURL(href);
-      }}
       style={({ pressed }) => ({
         opacity: pressed ? 0.78 : 1,
       })}
@@ -122,7 +116,7 @@ function FooterTextLink({
           {children}
         </Text>
       )}
-    </Pressable>
+    </SiteLink>
   );
 }
 

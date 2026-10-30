@@ -19,6 +19,7 @@ module.exports = {
         accent: "rgb(var(--jh-accent) / <alpha-value>)",
         "accent-soft": "rgb(var(--jh-accent-soft) / <alpha-value>)",
         shadow: "rgb(var(--jh-shadow) / <alpha-value>)",
+        minute: "rgb(var(--jh-minute) / <alpha-value>)",
       },
       fontFamily: {
         sans: [

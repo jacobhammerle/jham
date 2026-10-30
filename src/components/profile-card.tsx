@@ -1,7 +1,6 @@
 import { LocationRow } from "@/components/location-row";
 import {
-  isBannerProfileLayout,
-  isCompactProfileLayout,
+  profileLayoutStyles,
   type ProfileLayout,
 } from "@/components/profile-layout";
 import { ProfilePortrait } from "@/components/profile-portrait";
@@ -18,19 +17,14 @@ export function ProfileCard({
   layout?: ProfileLayout;
   themeName: ThemeName;
 }) {
-  const compact = isCompactProfileLayout(layout);
-  const titleClassName = compact
-    ? "text-2xl"
-    : isBannerProfileLayout(layout)
-      ? "text-4xl"
-      : "text-4xl md:text-6xl";
+  const compact = layout === "compact";
 
   return (
     <View className="items-center">
       <ProfilePortrait layout={layout} themeName={themeName} />
       <Text
         accessibilityRole="header"
-        className={`max-w-[720px] px-2 text-center font-black leading-tight tracking-normal text-primary ${titleClassName}`}
+        className={`max-w-[720px] px-2 text-center font-black leading-tight tracking-normal text-primary ${profileLayoutStyles[layout].title}`}
       >
         {siteMeta.title}
       </Text>

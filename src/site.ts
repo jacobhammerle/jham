@@ -11,8 +11,15 @@ export const siteLinks = {
   minute: "https://apps.apple.com/us/app/minute-audio-journal/id6502869472",
 } as const;
 
+export type SiteHref = (typeof siteLinks)[keyof typeof siteLinks];
+
+export const siteAssets = {
+  avatar: "/jacob-hammerle-avatar.jpg",
+} as const;
+
 export const siteMeta = {
   title: "Jacob Hammerle",
+  pageTitle: "Jacob Hammerle | Field Engineer at Expo",
   description:
     "Jacob Hammerle is a field engineer at Expo based in Cincinnati, Ohio.",
   author: "Jacob Hammerle",
@@ -32,7 +39,6 @@ export const personStructuredData = {
   url: siteLinks.home,
   name: siteMeta.title,
   description: siteMeta.description,
-  dateModified: "2026-05-25",
   mainEntity: {
     "@type": "Person",
     "@id": `${siteLinks.home}#jacob-hammerle`,

@@ -29,10 +29,6 @@ export function ThemedScreen({
   const hasBrowserTheme = Platform.OS !== "web" || hydrated;
   const themeName = manualTheme ?? (hasBrowserTheme ? systemTheme : "light");
 
-  function handleThemeChange(theme: ThemeName) {
-    setManualTheme(theme);
-  }
-
   return (
     <View
       className="flex-1 overflow-hidden bg-app"
@@ -41,7 +37,7 @@ export function ThemedScreen({
       <SketchGridBackground themeName={themeName} />
       <StatusBar style={themeName === "dark" ? "light" : "dark"} />
       {Platform.OS === "web" && !hideThemeToggle && (
-        <ThemeToggle themeName={themeName} onThemeChange={handleThemeChange} />
+        <ThemeToggle themeName={themeName} onThemeChange={setManualTheme} />
       )}
       {children(themeName)}
     </View>

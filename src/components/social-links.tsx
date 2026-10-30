@@ -1,26 +1,25 @@
 import { HoverTooltip } from "@/components/hover-tooltip";
 import {
-  isBannerProfileLayout,
-  isCompactProfileLayout,
+  profileLayoutStyles,
   type ProfileLayout,
 } from "@/components/profile-layout";
 import { useDismissibleTooltip } from "@/hooks/use-dismissible-tooltip";
-import { longPressHaptic, tapHaptic } from "@/lib/haptics";
-import { openURL } from "@/lib/open-url";
-import { siteLinks } from "@/site";
+import { SiteIcon } from "@/components/site-icon";
+import { type SiteIconName } from "@/components/site-icon.types";
+import { SiteLink } from "@/components/site-link";
+import { longPressHaptic } from "@/lib/haptics";
+import { siteLinks, type SiteHref } from "@/site";
 import { themeColors, type ThemeName } from "@/theme/tokens";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import * as Clipboard from "expo-clipboard";
 import { useEffect, useState } from "react";
-import { Platform, Pressable, Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 const isWeb = Platform.OS === "web";
 
 type SocialLink = {
   label: string;
-  href: string;
-  icon: string;
-  brand: boolean;
+  href: SiteHref;
+  icon: SiteIconName;
   shapeClassName: string;
   tooltipLabel: string;
 };
@@ -30,7 +29,6 @@ const links: SocialLink[] = [
     label: "GitHub profile",
     href: siteLinks.github,
     icon: "github",
-    brand: true,
     shapeClassName: "rounded-[14px]",
     tooltipLabel: "My Code",
   },
@@ -38,7 +36,6 @@ const links: SocialLink[] = [
     label: "X profile",
     href: siteLinks.x,
     icon: "x-twitter",
-    brand: true,
     shapeClassName: "rounded-xl",
     tooltipLabel: "Latest Activity",
   },
@@ -46,7 +43,6 @@ const links: SocialLink[] = [
     label: "LinkedIn profile",
     href: siteLinks.linkedin,
     icon: "linkedin-in",
-    brand: true,
     shapeClassName: "rounded-[10px]",
     tooltipLabel: "Connect",
   },
@@ -54,7 +50,6 @@ const links: SocialLink[] = [
     label: "Email Jacob",
     href: siteLinks.email,
     icon: "envelope",
-    brand: false,
     shapeClassName: "rounded-[10px]",
     tooltipLabel: "Email Me",
   },
@@ -67,12 +62,9 @@ export function SocialLinks({
   layout?: ProfileLayout;
   themeName: ThemeName;
 }) {
-  const banner = isBannerProfileLayout(layout);
-  const compact = isCompactProfileLayout(layout);
-
   return (
     <View
-      className={`${compact ? "mt-4 gap-1.5" : banner ? "mt-3 gap-1.5" : "mt-7 gap-2"} flex-row flex-wrap justify-center`}
+      className={`${profileLayoutStyles[layout].socialContainer} flex-row flex-wrap justify-center`}
     >
       {links.map((link) => (
         <SocialLinkButton
@@ -90,15 +82,16 @@ function SocialLinkButton({
   label,
   href,
   icon,
-  brand,
   shapeClassName,
   themeName,
   tooltipLabel,
   layout,
 }: SocialLink & { layout: ProfileLayout; themeName: ThemeName }) {
-  const [copied, setCopied] = useState(false);
-  const banner = isBannerProfileLayout(layout);
-  const compact = isCompactProfileLayout(layout);
+  const [copyFeedback, setCopyFeedback] = useState<"copied" | "failed" | null>(
+    null,
+  );
+  const { socialButton, socialIconSize: iconSize } =
+    profileLayoutStyles[layout];
   const {
     blurTooltip,
     dismissTooltip,
@@ -114,96 +107,107 @@ function SocialLinkButton({
     : "";
 
   useEffect(() => {
-    if (!copied) {
+    if (!copyFeedback) {
       return;
     }
 
-    const timeout = setTimeout(() => setCopied(false), 1400);
+    const timeout = setTimeout(() => setCopyFeedback(null), 1400);
 
     return () => clearTimeout(timeout);
-  }, [copied]);
+  }, [copyFeedback]);
 
   async function copyEmailAddress() {
-    longPressHaptic();
-
     if (!emailAddress) {
       return;
     }
 
-    const didCopy = await Clipboard.setStringAsync(emailAddress);
+    longPressHaptic();
 
-    if (didCopy) {
-      setCopied(true);
+    try {
+      const didCopy = await Clipboard.setStringAsync(emailAddress);
+      setCopyFeedback(didCopy ? "copied" : "failed");
+    } catch {
+      setCopyFeedback("failed");
     }
   }
 
   return (
-    <Pressable
+    <SiteLink
+      href={href}
       accessibilityLabel={label}
       accessibilityHint={
         emailAddress
           ? "Opens an email draft. Long press to copy the email address"
           : "Opens a new site"
       }
-      accessibilityRole="link"
-      className={`${compact ? "h-10 w-10" : banner ? "h-9 w-9" : "h-11 w-11"} items-center justify-center border border-border/70 bg-surface/70 shadow-sm shadow-shadow/0 ${webClassName} ${shapeClassName}`}
+      className={`${socialButton} items-center justify-center border border-border/70 bg-surface/70 shadow-sm shadow-shadow/0 ${webClassName} ${shapeClassName}`}
       hitSlop={8}
       onBlur={isWeb ? blurTooltip : undefined}
       onFocus={isWeb ? focusTooltip : undefined}
       onHoverIn={isWeb ? resetDismissal : undefined}
       onHoverOut={isWeb ? resetDismissal : undefined}
       onLongPress={emailAddress ? () => void copyEmailAddress() : undefined}
-      onPress={() => {
-        tapHaptic();
-        dismissTooltip();
-        openURL(href);
-      }}
+      onPress={dismissTooltip}
       style={({ pressed }) => ({
         opacity: pressed ? 0.84 : 1,
       })}
     >
-      {({ hovered, pressed }) => (
-        <>
-          <View
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-            style={{
-              opacity: hovered || pressed ? 1 : 0.95,
-            }}
-          >
-            <FontAwesome6
-              name={icon}
-              brand={brand}
-              solid={!brand}
-              size={compact ? 17 : banner ? 16 : 19}
-              color={
-                hovered || pressed
-                  ? themeColors[themeName].accent
-                  : themeColors[themeName].subtle
-              }
-            />
-          </View>
-          {isWeb && !compact && !banner && (shouldShowTooltip(hovered) || copied) ? (
-            <HoverTooltip>
-              {copied ? (
-                <FontAwesome6
-                  name="check"
-                  solid
-                  size={10}
-                  color={themeColors[themeName].accent}
-                />
-              ) : (
-                <Text
-                  className="text-xs font-medium text-primary"
-                  numberOfLines={1}
-                >
-                  {tooltipLabel}
-                </Text>
-              )}
-            </HoverTooltip>
-          ) : null}
-        </>
-      )}
-    </Pressable>
+      {({ hovered, pressed }) => {
+        const active = hovered || pressed;
+        const showTooltip =
+          isWeb &&
+          layout === "default" &&
+          (shouldShowTooltip(hovered) || copyFeedback !== null);
+
+        return (
+          <>
+            <Text accessibilityLiveRegion="polite" className="sr-only">
+              {copyFeedback === "copied"
+                ? "Email address copied"
+                : copyFeedback === "failed"
+                  ? "Could not copy the email address"
+                  : ""}
+            </Text>
+            <View
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              style={{
+                opacity: active ? 1 : 0.95,
+              }}
+            >
+              <SiteIcon
+                name={icon}
+                size={iconSize}
+                color={
+                  active
+                    ? themeColors[themeName].accent
+                    : themeColors[themeName].subtle
+                }
+              />
+            </View>
+            {showTooltip ? (
+              <HoverTooltip>
+                {copyFeedback === "copied" ? (
+                  <SiteIcon
+                    name="check"
+                    size={10}
+                    color={themeColors[themeName].accent}
+                  />
+                ) : (
+                  <Text
+                    className="text-xs font-medium text-primary"
+                    numberOfLines={1}
+                  >
+                    {copyFeedback === "failed"
+                      ? "Could not copy"
+                      : tooltipLabel}
+                  </Text>
+                )}
+              </HoverTooltip>
+            ) : null}
+          </>
+        );
+      }}
+    </SiteLink>
   );
 }

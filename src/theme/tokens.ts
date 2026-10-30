@@ -1,5 +1,4 @@
 import { vars } from "nativewind";
-import colors from "tailwindcss/colors";
 
 export type ThemeName = "light" | "dark";
 
@@ -14,6 +13,7 @@ const colorRoles = [
   "accent",
   "accentSoft",
   "shadow",
+  "minute",
 ] as const;
 
 type ColorRole = (typeof colorRoles)[number];
@@ -39,28 +39,30 @@ function hexToRgbChannels(hex: string) {
 
 const palette: Palette = {
   light: {
-    app: colors.zinc[50],
-    surface: colors.white,
-    surfaceMuted: colors.zinc[100],
-    primary: colors.zinc[900],
-    secondary: colors.zinc[600],
-    subtle: colors.zinc[500],
-    border: colors.zinc[300],
-    accent: colors.cyan[700],
-    accentSoft: colors.cyan[50],
-    shadow: colors.cyan[500],
+    app: "#fafafa",
+    surface: "#ffffff",
+    surfaceMuted: "#f4f4f5",
+    primary: "#18181b",
+    secondary: "#52525b",
+    subtle: "#71717a",
+    border: "#d4d4d8",
+    accent: "#0e7490",
+    accentSoft: "#ecfeff",
+    shadow: "#06b6d4",
+    minute: "#c2410c",
   },
   dark: {
-    app: colors.slate[950],
-    surface: colors.slate[900],
-    surfaceMuted: colors.slate[800],
-    primary: colors.zinc[50],
-    secondary: colors.slate[300],
-    subtle: colors.slate[400],
-    border: colors.slate[700],
-    accent: colors.sky[300],
-    accentSoft: colors.sky[950],
-    shadow: colors.sky[400],
+    app: "#020617",
+    surface: "#0f172a",
+    surfaceMuted: "#1e293b",
+    primary: "#fafafa",
+    secondary: "#cbd5e1",
+    subtle: "#94a3b8",
+    border: "#334155",
+    accent: "#7dd3fc",
+    accentSoft: "#082f49",
+    shadow: "#38bdf8",
+    minute: "#fdba74",
   },
 };
 

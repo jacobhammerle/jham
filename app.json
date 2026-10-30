@@ -12,7 +12,7 @@
       "output": "static"
     },
     "plugins": [
-      "expo-router",
+      ["expo-router", { "sitemap": false }],
       [
         "expo-splash-screen",
         {
