@@ -19,8 +19,11 @@ export type BlogPost = {
   shortTitle: string;
   compactTitle: string;
   href: `https://${string}`;
+  // ISO 8601 date, used in structured data.
   publishedAt: string;
+  // The blog or site where the post is published.
   publisher: string;
+  publisherUrl: `https://${string}`;
 };
 
 export const blogPosts = [
@@ -31,6 +34,7 @@ export const blogPosts = [
     href: "https://expo.dev/blog/agentic-workflows-with-expo-simulators",
     publishedAt: "2026-11-19",
     publisher: "Expo blog",
+    publisherUrl: "https://expo.dev/blog",
   },
 ] as const satisfies readonly BlogPost[];
 
@@ -47,8 +51,7 @@ export const siteAssets = {
 export const siteMeta = {
   title: "Jacob Hammerle",
   pageTitle: "Jacob Hammerle | Field Engineer at Expo",
-  description:
-    "Jacob Hammerle is a field engineer at Expo based in Cincinnati, Ohio.",
+  description: `Jacob Hammerle is a field engineer at Expo based in Cincinnati, Ohio. Latest post: ${latestBlogPost.title}.`,
   author: "Jacob Hammerle",
   headshotUrl: `${siteLinks.home}jacob-hammerle.jpg`,
   shareImageUrl: `${siteLinks.home}site-preview.png`,
@@ -59,6 +62,25 @@ export const siteMeta = {
   shareImageHeight: "746",
 } as const;
 
+const personId = `${siteLinks.home}#jacob-hammerle`;
+
+// One BlogPosting per post, so search engines connect each article to the
+// same Person entity as the profile.
+const blogPostingStructuredData = blogPosts.map((post) => ({
+  "@type": "BlogPosting",
+  "@id": post.href,
+  headline: post.title,
+  url: post.href,
+  mainEntityOfPage: post.href,
+  datePublished: post.publishedAt,
+  author: { "@id": personId },
+  isPartOf: {
+    "@type": "Blog",
+    name: post.publisher,
+    url: post.publisherUrl,
+  },
+}));
+
 export const personStructuredData = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
@@ -68,7 +90,7 @@ export const personStructuredData = {
   description: siteMeta.description,
   mainEntity: {
     "@type": "Person",
-    "@id": `${siteLinks.home}#jacob-hammerle`,
+    "@id": personId,
     name: siteMeta.title,
     givenName: "Jacob",
     familyName: "Hammerle",
@@ -89,4 +111,5 @@ export const personStructuredData = {
     },
     sameAs: [siteLinks.github, siteLinks.linkedin, siteLinks.x],
   },
+  hasPart: blogPostingStructuredData,
 } as const;
