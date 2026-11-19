@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
@@ -7,6 +9,11 @@ module.exports = {
   ],
   presets: [require("nativewind/preset")],
   theme: {
+    // `xs` must come first so min-width rules stay in ascending order.
+    screens: {
+      xs: "375px",
+      ...defaultTheme.screens,
+    },
     extend: {
       colors: {
         app: "rgb(var(--jh-app) / <alpha-value>)",

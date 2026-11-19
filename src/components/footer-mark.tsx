@@ -1,15 +1,9 @@
-import { ExternalLinkArrow } from "@/components/external-link-arrow";
+import { LinkPill } from "@/components/link-pill";
 import { SiteLink } from "@/components/site-link";
 import { siteLinks, type SiteHref } from "@/site";
 import { Platform, Text, View } from "react-native";
 
 const isWeb = Platform.OS === "web";
-
-const minutePillClassName = `h-8 justify-center rounded-full border border-orange-500/35 bg-orange-500/10 px-3 shadow-sm shadow-orange-500/10 ${
-  isWeb
-    ? "transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/70 hover:border-orange-500/65 hover:bg-orange-500/15 hover:shadow-orange-500/20"
-    : ""
-}`;
 
 export function FooterMark() {
   const currentYear = new Date().getFullYear();
@@ -47,38 +41,14 @@ export function FooterMark() {
 
 function MinuteLink() {
   return (
-    <SiteLink
-      href={siteLinks.minute}
-      accessibilityLabel="Try Minute audio journal"
+    <LinkPill
       accessibilityHint="Opens Minute on the App Store"
-      className={minutePillClassName}
-      style={({ pressed }) => ({
-        opacity: pressed ? 0.86 : 1,
-      })}
-    >
-      {({ hovered, pressed }) => (
-        <View className="flex-row items-center gap-1.5">
-          <View
-            className={`h-1.5 w-1.5 rounded-full ${
-              isWeb ? "animate-pulse transition duration-200 ease-out" : ""
-            } ${hovered || pressed ? "bg-orange-400" : "bg-orange-500"}`}
-          />
-          <Text
-            className={`text-xs font-semibold tracking-[0.04em] text-minute ${
-              hovered || pressed ? "underline" : ""
-            }`}
-          >
-            Try Minute!
-          </Text>
-          <ExternalLinkArrow
-            className="text-minute"
-            hovered={hovered}
-            motion="flight"
-            pressed={pressed}
-          />
-        </View>
-      )}
-    </SiteLink>
+      accessibilityLabel="Try Minute audio journal"
+      href={siteLinks.minute}
+      label="Try Minute!"
+      leading={{ type: "dot" }}
+      tone="minute"
+    />
   );
 }
 

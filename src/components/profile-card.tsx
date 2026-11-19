@@ -1,3 +1,4 @@
+import { BlogPostPill } from "@/components/blog-post-pill";
 import { LocationRow } from "@/components/location-row";
 import {
   profileLayoutStyles,
@@ -21,6 +22,7 @@ export function ProfileCard({
 
   return (
     <View className="items-center">
+      {layout === "default" && <BlogPostPill className="mb-5 xs:mb-6" />}
       <ProfilePortrait layout={layout} themeName={themeName} />
       <Text
         accessibilityRole="header"

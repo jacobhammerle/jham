@@ -11,7 +11,34 @@ export const siteLinks = {
   minute: "https://apps.apple.com/us/app/minute-audio-journal/id6502869472",
 } as const;
 
-export type SiteHref = (typeof siteLinks)[keyof typeof siteLinks];
+// Blog posts, newest first. External posts link out to where they are
+// published; a future on-site blog section can add internal posts here too.
+export type BlogPost = {
+  title: string;
+  // Shorter titles for narrow screens.
+  shortTitle: string;
+  compactTitle: string;
+  href: `https://${string}`;
+  publishedAt: string;
+  publisher: string;
+};
+
+export const blogPosts = [
+  {
+    title: "Agentic Workflows with Expo Simulators",
+    shortTitle: "Agentic Workflows with Expo",
+    compactTitle: "Agentic Workflows",
+    href: "https://expo.dev/blog/agentic-workflows-with-expo-simulators",
+    publishedAt: "2026-11-19",
+    publisher: "Expo blog",
+  },
+] as const satisfies readonly BlogPost[];
+
+export const latestBlogPost: BlogPost = blogPosts[0];
+
+export type SiteHref =
+  | (typeof siteLinks)[keyof typeof siteLinks]
+  | BlogPost["href"];
 
 export const siteAssets = {
   avatar: "/jacob-hammerle-avatar.jpg",
