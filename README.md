@@ -10,7 +10,7 @@
 
 ## Built With
 
-- [Expo SDK 56](https://docs.expo.dev/versions/v56.0.0/)
+- [Expo SDK 58](https://docs.expo.dev/versions/v58.0.0/)
 - [Expo Router](https://docs.expo.dev/router/introduction/)
 - [NativeWind](https://www.nativewind.dev/)
 - TypeScript
