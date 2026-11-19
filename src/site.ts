@@ -41,8 +41,7 @@ export const blogPosts = [
 export const latestBlogPost: BlogPost = blogPosts[0];
 
 export type SiteHref =
-  | (typeof siteLinks)[keyof typeof siteLinks]
-  | BlogPost["href"];
+  (typeof siteLinks)[keyof typeof siteLinks] | BlogPost["href"];
 
 export const siteAssets = {
   avatar: "/jacob-hammerle-avatar.jpg",
@@ -80,6 +79,8 @@ const blogPostingStructuredData = blogPosts.map((post) => ({
     url: post.publisherUrl,
   },
 }));
+
+export const notFoundTitle = `Page not found | ${siteMeta.title}`;
 
 export const personStructuredData = {
   "@context": "https://schema.org",

@@ -1,5 +1,4 @@
 import { Link } from "expo-router";
-import Head from "expo-router/head";
 import { Pressable, Text, View } from "react-native";
 
 import { ThemedScreen } from "@/components/themed-screen";
@@ -7,10 +6,6 @@ import { ThemedScreen } from "@/components/themed-screen";
 export default function NotFoundScreen() {
   return (
     <>
-      <Head>
-        <title>Page not found | Jacob Hammerle</title>
-        <meta name="robots" content="noindex, follow" />
-      </Head>
       <ThemedScreen>
         {() => (
           <View

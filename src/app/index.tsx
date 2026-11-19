@@ -4,13 +4,17 @@ import {
   profileLayoutStyles,
 } from "@/components/profile-layout";
 import { ProfileCard } from "@/components/profile-card";
-import { SiteHead } from "@/components/site-head";
 import { ThemedScreen } from "@/components/themed-screen";
 import { useHydrated } from "@/hooks/use-hydrated";
+import { homeMetadata } from "@/seo";
 import { Platform, useWindowDimensions, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const MIN_HEIGHT_FOR_FOOTER = 575;
+
+export function generateMetadata() {
+  return homeMetadata;
+}
 
 export default function HomeScreen() {
   const hydrated = useHydrated();
@@ -21,7 +25,6 @@ export default function HomeScreen() {
 
   return (
     <>
-      <SiteHead />
       <ThemedScreen hideThemeToggle={profileLayout === "compact"}>
         {(themeName) => (
           <SafeAreaView className="relative flex-1">
